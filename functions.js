@@ -4,7 +4,7 @@ let humanScore = 0;
 let computerScore = 0;
 
 
-//Start the Game
+//Play the Game
 function playGame () {
 
     //Resetting Scores
@@ -18,12 +18,20 @@ function playGame () {
 
         playRound(humanSelection, computerSelection);
 
+        if(humanSelection == computerSelection) i--;
+
         console.log("The scores are: " + humanScore + " : " + computerScore);
+        document.getElementById("scores").innerHTML = humanScore + " : " + computerScore;
 
     }
 
-    if(humanScore > computerScore) console.log("YOU WIN!") 
-        else console.log("Oof better luck next time :/");
+    if(humanScore > computerScore) {
+        console.log("YOU WIN!");
+        document.getElementById("game").innerHTML = "YOU WIN!";
+    } else {
+        document.getElementById("game").innerHTML = "Oof better luck next time :/";
+        console.log("Oof better luck next time :/");
+    } 
 
 }
 
@@ -96,14 +104,18 @@ function getComputerChoice() {
     }
 }
 
-//Get the Human Choice
+//Get the Human Choice With Prompt
 function getHumanChoice() {
     let choice = "";
     while(choice != "rock" && choice != "paper"
          && choice != "scissors") {
 
-        choice = prompt("What's your choice?");
+        try {
+            choice = prompt("What's your choice?");
         choice = choice.toLowerCase();
+        } catch(err) {
+            console.log("No Choice Made!")
+        }
     }
 
     return choice;
