@@ -4,24 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RockPaperScissors</title>
-    <script src="functions.js"></script>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <script src="functions.js" defer></script>
 </head>
 <body>
     <div class="window">
 
-        <div class="scores" id="scores">
+        <div class="scores">
             _ : _
         </div>
 
-        <div class="game" id="game">
+        <div class="game">
             Rock Paper Scissors
         </div>
 
-        <button class="game-start" onclick="playGame()" id="game-start">Start Game!</button>
+        <button id="game-start">Start Game!</button>
+
+        <div class="choices">
+            <button class="btn-choice" id="rock">🪨</button>
+            <button class="btn-choice" id="paper">🖐</button>
+            <button class="btn-choice" id="scissors">✂️</button>
+        </div>
 
     </div>
 </body>

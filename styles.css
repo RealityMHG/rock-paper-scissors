@@ -25,7 +25,20 @@ body {
     padding: 70px;
 }
 
-.game-start {
+#game-start {
     border-radius: 15px;
     padding: 10px;
+}
+
+.choices {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    visibility: hidden;
+}
+
+.btn-choice {
+    border-radius: 10px;
+    font-size: 50px;
 }
