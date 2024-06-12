@@ -19,6 +19,9 @@ body {
 
 .scores {
     font-size: 32px;
+    background-color: #face55;
+    border-radius: 15px;
+    padding: 20px;
 }
 
 .game {

@@ -9,55 +9,49 @@ gameBtn.addEventListener("click", () => {
     playGame();
 });
 
+//Game Variables
+let choiceBtn = document.querySelector(".choices");
+let gameText = document.querySelector(".game");
+let gameScore = document.querySelector(".scores");
+
+let computerSelection = "";
+
+//Choice Buttons
+const rockBtn = document.querySelector("#rock");
+const paperBtn = document.querySelector("#paper");
+const scissorsBtn = document.querySelector("#scissors");
+
+let eventFiredAlready = false;
 //Play the Game
 function playGame () {
 
     //Change buttons
-    gameBtn.style.visibility = "hidden";
-    const choiceBtn = document.querySelector(".choices");
-    choiceBtn.style.visibility = "visible";
-    const gameText = document.querySelector(".game");
-    gameText.textContent = "Take Your Pick!"
+    buttonLayout("game","");
 
-    //Choice Buttons
-    const rockBtn = document.querySelector("#rock");
-    const paperBtn = document.querySelector("#paper");
-    const scissorsBtn = document.querySelector("#scissors");
-
-    let computerSelection = getComputerChoice();
-
-    let gameScore = document.querySelector(".scores");
+    computerSelection = getComputerChoice();
     
-    rockBtn.addEventListener("click", () => {
-        gameText.textContent = getBattleResult("rock",computerSelection);
-
-        gameBtn.textContent = "Next Round"
-        gameBtn.style.visibility = "visible";
-        choiceBtn.style.visibility = "hidden";
-
-        gameScore.textContent = (humanScore + " : " + computerScore);
+    rockBtn.addEventListener("click", function() {
+        if(!eventFiredAlready) {
+            buttonLayout("rock",computerSelection);
+            eventFiredAlready = true;
+        }  
     });
 
-    paperBtn.addEventListener("click", () => {
-        gameText.textContent = getBattleResult("paper",computerSelection);
-
-        gameBtn.textContent = "Next Round"
-        gameBtn.style.visibility = "visible";
-        choiceBtn.style.visibility = "hidden";
-
-        gameScore.textContent = (humanScore + " : " + computerScore);
+    paperBtn.addEventListener("click", function() {
+        if(!eventFiredAlready) {
+            buttonLayout("paper",computerSelection);
+            eventFiredAlready = true;
+        }  
     });
 
-    scissorsBtn.addEventListener("click", () => {
-        gameText.textContent = getBattleResult("scissors",computerSelection);
-
-        gameBtn.textContent = "Next Round"
-        gameBtn.style.visibility = "visible";
-        choiceBtn.style.visibility = "hidden";
-
-        gameScore.textContent = (humanScore + " : " + computerScore);
+    scissorsBtn.addEventListener("click", function() {
+        if(!eventFiredAlready) {
+            buttonLayout("scissors",computerSelection);
+            eventFiredAlready = true;
+        }  
     });
 
+    eventFiredAlready = false;
 }
 
 //Single Round of the Game
@@ -146,46 +140,67 @@ function getHumanChoicePrompt() {
     return choice;
 }
 
+function buttonLayout(layout, computerSelection) {
+    if (layout === "game") {
+        gameBtn.style.visibility = "hidden";
+        choiceBtn = document.querySelector(".choices");
+        choiceBtn.style.visibility = "visible";
+        gameText = document.querySelector(".game");
+        gameText.textContent = "Take Your Pick!"
+    } else {
+        gameText.textContent = getBattleResult(layout,computerSelection);
+        gameBtn.textContent = "Next Round"
+        gameBtn.style.visibility = "visible";
+        choiceBtn.style.visibility = "hidden";
+        gameScore.textContent = (humanScore + " : " + computerScore);
+    }
+}
+
 //Handle Battle
 function getBattleResult(humanChoice,computerChoice) {
     if (humanChoice == "rock") {
         if(computerChoice == "rock") return "It's a Tie!";
 
-        if(computerChoice == "paper"){
-            computerScore++;
+        else if(computerChoice == "paper"){
+            didIWin(false);
             return "Oof, better luck next time :/";
         } 
 
-        if(computerChoice == "scissors") {
-            humanScore++;
+        else if(computerChoice == "scissors") {
+            didIWin(true);
             return "You Win!";
         }
     } else if (humanChoice == "paper") {
         if(computerChoice == "rock") {
-            humanScore++;
+            didIWin(true);
             return "You Win!";
         }
 
-        if(computerChoice == "paper") return "It's a Tie!";
+        else if(computerChoice == "paper") return "It's a Tie!";
 
-        if(computerChoice == "scissors") {
-            computerScore++;
+        else if(computerChoice == "scissors") {
+            didIWin(false);
             return "Oof, better luck next time :/";
         }
     } else {
         if(computerChoice == "rock") {
-            computerScore++;
+            didIWin(false);
             return "Oof, better luck next time :/";
         }
 
-        if(computerChoice == "paper") {
-            humanScore++;
+        else if(computerChoice == "paper") {
+            didIWin(true);
             return "You Win!";
         }
 
-        if(computerChoice == "scissors") return "It's a Tie!";
+        else if(computerChoice == "scissors") return "It's a Tie!";
     }
     return "ERROR";
+}
+
+function didIWin(champion) {
+    if(champion) humanScore++;
+    else computerScore++;
 }
 
 //Get a random number between 0 and 2
