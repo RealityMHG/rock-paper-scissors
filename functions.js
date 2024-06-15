@@ -147,12 +147,20 @@ function buttonLayout(layout, computerSelection) {
         choiceBtn.style.visibility = "visible";
         gameText = document.querySelector(".game");
         gameText.textContent = "Take Your Pick!"
+    } else if (layout === "end"){
+        gameBtn.style.visibility = "hidden";
+        choiceBtn.style.visibility = "hidden";
+        if(humanScore>computerScore) gameText.textContent = "YOU WON!!!";
+        else gameText.textContent = "You Lost :( , Try Again Next Time"
     } else {
-        gameText.textContent = getBattleResult(layout,computerSelection);
+        gameText.textContent = getBattleResult(layout,computerSelection) + "   " +
+         selectionAsEmoji(computerSelection);
+         
         gameBtn.textContent = "Next Round"
         gameBtn.style.visibility = "visible";
         choiceBtn.style.visibility = "hidden";
         gameScore.textContent = (humanScore + " : " + computerScore);
+        checkIfOver();
     }
 }
 
@@ -201,6 +209,18 @@ function getBattleResult(humanChoice,computerChoice) {
 function didIWin(champion) {
     if(champion) humanScore++;
     else computerScore++;
+}
+
+function checkIfOver () {
+    if(humanScore === 5 || computerScore === 5) {
+        buttonLayout("end");
+    }
+}
+
+function selectionAsEmoji (selection) {
+    if (selection == "rock") return "🪨";
+    else if (selection == "paper") return "🖐";
+    else return "✂️";
 }
 
 //Get a random number between 0 and 2
